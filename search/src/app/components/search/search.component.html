@@ -1,0 +1,23 @@
+<div class="search-container">
+  <input type="text" class="search-input" placeholder="Search..."
+    (keyup)="onSearch($event)" />
+
+  <div class="loading-indicator" *ngIf="loading">Loading...</div>
+
+  <div class="error-message" *ngIf="error">{{ error }}</div>
+
+  <div class="search-results" *ngIf="searchResults">
+    <h3>Search Results</h3>
+    <p>{{ searchResults }}</p>
+  </div>
+
+  <div class="combined-data" *ngIf="combinedData">
+    <h3>User Details</h3>
+    <p>{{ combinedData?.name }}</p>
+
+    <h3>User Posts</h3>
+    <ul>
+      <li *ngFor="let post of combinedData?.posts">{{ post.title }}</li>
+    </ul>
+  </div>
+</div>
