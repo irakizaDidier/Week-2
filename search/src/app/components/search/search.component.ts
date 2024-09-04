@@ -9,6 +9,7 @@ import {
   catchError,
 } from 'rxjs/operators';
 import { SearchService } from '../../services/search.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-search',
@@ -22,7 +23,10 @@ export class SearchComponent implements OnInit {
   error: string = '';
   noResults: boolean = false;
 
-  constructor(private searchService: SearchService) {}
+  constructor(
+    private searchService: SearchService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.loadAllUsers();
@@ -34,9 +38,11 @@ export class SearchComponent implements OnInit {
       next: (users) => {
         this.users = users;
         this.searchResults = users;
+        this.toastr.success('Users loaded successfully!', 'Success');
         this.loading = false;
       },
       error: (err) => {
+        this.toastr.error(err.message, 'Error');
         this.error = err.message;
         this.loading = false;
       },
@@ -77,6 +83,7 @@ export class SearchComponent implements OnInit {
               return results;
             }),
             catchError((err) => {
+              this.toastr.error('Search failed', 'Error');
               this.error = 'Search failed';
               return of([]);
             }),
@@ -85,8 +92,12 @@ export class SearchComponent implements OnInit {
         )
       )
       .subscribe({
-        next: (results) => (this.searchResults = results),
+        next: (results) => {
+          this.searchResults = results;
+          this.toastr.success('Search completed', 'Success');
+        },
         error: (err) => {
+          this.toastr.error(err.message, 'Error');
           this.error = err.message;
           this.loading = false;
         },
