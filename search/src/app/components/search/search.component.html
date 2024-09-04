@@ -1,23 +1,23 @@
 <div class="search-container">
-  <input type="text" class="search-input" placeholder="Search..."
+  <input
+    type="text"
+    class="search-input"
+    placeholder="Search for users..."
     (keyup)="onSearch($event)" />
 
   <div class="loading-indicator" *ngIf="loading">Loading...</div>
-
   <div class="error-message" *ngIf="error">{{ error }}</div>
 
-  <div class="search-results" *ngIf="searchResults">
-    <h3>Search Results</h3>
-    <p>{{ searchResults }}</p>
-  </div>
-
-  <div class="combined-data" *ngIf="combinedData">
-    <h3>User Details</h3>
-    <p>{{ combinedData?.name }}</p>
-
-    <h3>User Posts</h3>
-    <ul>
-      <li *ngFor="let post of combinedData?.posts">{{ post.title }}</li>
+  <div class="search-results">
+    <ul *ngIf="!noResults && searchResults.length > 0">
+      <li *ngFor="let result of searchResults" class="user-card">
+        <div class="user-name">{{ result.name }}</div>
+        <div class="user-details">{{ result.details }}</div>
+        <div class="user-post" *ngIf="result.post">{{ result.post }}</div>
+      </li>
     </ul>
+    <div class="no-results-message" *ngIf="noResults">
+      Result not found
+    </div>
   </div>
 </div>
