@@ -29,7 +29,7 @@ export class SearchService {
   constructor() {}
 
   private simulateHttpRequest(): Observable<any> {
-    const randomSuccess = Math.random() > 0.3; // 70% success rate
+    const randomSuccess = Math.random() > 0.3;
     return of(this.mockData).pipe(
       delay(1000),
       tap(() => console.log('HTTP request initiated')),
@@ -39,7 +39,7 @@ export class SearchService {
         }
         return this.mockData;
       }),
-      retry(2), // Retry twice before failing
+      retry(2),
       catchError((error) => {
         console.error('HTTP request failed after retries', error);
         return throwError(() => new Error('Failed after retries'));
