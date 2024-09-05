@@ -1,14 +1,6 @@
 import { Injectable } from '@angular/core';
-import { of, Observable, throwError, combineLatest } from 'rxjs';
-import {
-  debounceTime,
-  map,
-  catchError,
-  delay,
-  filter,
-  retry,
-  tap,
-} from 'rxjs/operators';
+import { of, Observable, combineLatest } from 'rxjs';
+import { debounceTime, map, catchError, delay, filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -28,28 +20,13 @@ export class SearchService {
 
   constructor() {}
 
-  private simulateHttpRequest(): Observable<any> {
-    const randomSuccess = Math.random() > 0.3;
-    return of(this.mockData).pipe(
-      delay(1000),
-      tap(() => console.log('HTTP request initiated')),
-      map(() => {
-        if (!randomSuccess) {
-          throw new Error('Random simulated error');
-        }
-        return this.mockData;
-      }),
-      retry(2),
-      catchError((error) => {
-        console.error('HTTP request failed after retries', error);
-        return throwError(() => new Error('Failed after retries'));
-      }),
-      tap(() => console.log('HTTP request completed'))
-    );
-  }
-
   getAllUsers(): Observable<{ name: string; details: string }[]> {
-    return this.simulateHttpRequest();
+    return of(this.mockData).pipe(
+      delay(500),
+      catchError(() => {
+        throw new Error('Error loading users');
+      })
+    );
   }
 
   getUserPosts(): Observable<{ name: string; post: string }[]> {
