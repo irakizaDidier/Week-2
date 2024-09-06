@@ -2,10 +2,15 @@
   <ng-container *ngIf="cart.length > 0; else emptyCart">
     <h3>Your Cart</h3>
     <div *ngFor="let item of cart" class="cart-item">
-      <p>{{ item.productName }} ({{ item.quantity }})</p>
+      <img [src]="item.image" alt="{{item.productName}}" width="50"
+        height="50" />
+      <p>{{ item.productName }} (x{{ item.quantity }})</p>
+      <p>Price: {{ item.price | currency }}</p>
       <button (click)="removeFromCart(item.productId)">Remove</button>
     </div>
     <p class="cart-summary">Total Items: {{ totalItems$ | async }}</p>
+    <p class="cart-summary">Total Price: {{ totalPrice$ | async | currency
+      }}</p>
     <button (click)="clearCart()">Clear Cart</button>
   </ng-container>
 </div>

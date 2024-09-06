@@ -10,12 +10,14 @@ import { CartService, CartItem } from '../../services/cart.service';
 export class CartComponent implements OnInit {
   cart$: Observable<CartItem[]> | undefined;
   totalItems$: Observable<number> | undefined;
+  totalPrice$: Observable<number> | undefined;
 
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
     this.cart$ = this.cartService.cart$;
     this.totalItems$ = this.cartService.getTotalItems();
+    this.totalPrice$ = this.cartService.getTotalPrice();
   }
 
   removeFromCart(productId: number) {
