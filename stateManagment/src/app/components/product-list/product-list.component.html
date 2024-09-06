@@ -1,13 +1,16 @@
-<div class="product-list" *ngFor="let product of products$ | async">
-  <div class="product-card">
-    <img [src]="product.image" alt="{{ product.name }}" class="product-image" />
-    <h3>{{ product.name }}</h3>
-    <p class="product-category">Category: {{ product.category }}</p>
-    <p class="product-description">{{ product.description }}</p>
-    <p class="product-price">Price: {{ product.price | currency }}</p>
-    <div class="product-rating">
-      Rating: {{ product.rating.rate }} ★
+<section>
+  <div class="product-list" *ngFor="let product of products$ | async">
+    <div class="product-card">
+      <img [src]="product.image" alt="{{ product.name }}"
+        class="product-image" />
+      <h3>{{ product.name }}</h3>
+      <p class="product-category">Category: {{ product.category }}</p>
+      <p class="product-description">{{ product.description | truncate:10 }}</p>
+      <p class="product-price">Price: {{ product.price | currency }}</p>
+      <div class="product-rating">
+        Rating: {{ product.rating.rate }} ★
+      </div>
+      <button (click)="addToCart(product)">Add to Cart</button>
     </div>
-    <button (click)="addToCart(product)">Add to Cart</button>
   </div>
-</div>
+</section>

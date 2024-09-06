@@ -27,4 +27,11 @@ export class ProductListComponent implements OnInit {
       price: product.price,
     });
   }
+  transform(value: string, limit: number): string {
+    if (!value) return '';
+    const words = value.split(' ');
+    return words.length > limit
+      ? words.slice(0, limit).join(' ') + '...'
+      : value;
+  }
 }
