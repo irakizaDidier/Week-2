@@ -1,4 +1,8 @@
-# Search
+# error-handling
+
+# hosted link
+
+https://week-2-error-handling.vercel.app/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
 
